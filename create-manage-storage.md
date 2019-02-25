@@ -31,7 +31,7 @@ When you provision an {{site.data.keyword.vsi_is_full}} instance, a 100 GB, gene
 
 You can also create secondary data volumes, which are automatically attached to the VSI. For more information about block storage volumes for the VPC, see [About Block Storage for VPC](/docs/infrastructure/block-storage-is?topic=block-storage-is-block-storage-about). To get started creating volumes independent of VSI provisioning, see [Getting Started with {{site.data.keyword.block_storage_is_short}}](/docs/infrastructure/block-storage-is?topicid=block-storage-is-block-storage-getting-started).
 
-By default, boot and data volumes are encrypted with IBM-managed encryption. You can also encrypt your volumes using your own encyption keys, during VSI provisioning or when creating a standalone volume.
+By default, boot and data volumes are encrypted with IBM-managed encryption. You can also encrypt your volumes using your own encryption keys, during VSI provisioning or when creating a standalone volume.
 
 ## Best practices for creating and naming your VPC block storage volumes:
 
