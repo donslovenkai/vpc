@@ -4,7 +4,11 @@ copyright:
 
   years: 2018, 2019
 
-lastupdated: "2019-02-20"
+lastupdated: "2019-03-03"
+
+keywords: error, message, API, limitations, rias, support
+
+subcollection: vpc
 
 ---
 
@@ -39,26 +43,33 @@ One or more subnets are using the address prefix. You must detach all the subnet
 ## backend_service_unavailable
 **Message**: The backend service is unavailable.
 
-A backend cloud service failed to respond. One cause for receiving this error could be a missing or expired IAM token. Try again in a few minutes. If this problem persists, contact support.
+A backend cloud service that is used by VPC failed to respond. VPC uses multiple IBM Cloud services, such as:
+
+- [Identity and Asset Management](/docs/iam?topic=iam-iamoverview) (IAM)  
+- [Global Catalog](https://{DomainName}/catalog)
+- Resource Controller
+- Resource Manager
+
+You can check [status](https://{DomainName}/status) of IBM Cloud services and try again in a few minutes. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## bad_field
 **Message**: Correct instance UUID should be provided
 
-New volume name should be provided
+One of the values provided in the request is incorrect. Check the `target` value in the error returned for clues as to which parameter was incorrect. In some cases, the UUID or volume in the request cannot be found. Provide a valid value and try again.
 
-Try again, providing a valid UUID or volume in your request. 
-
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+Refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window} for additional help. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## bad_request                                   
 **Message**: The information given was invalid, malformed, or missing a required field.
 
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+The request was not what we expected. Use the [API documentation](https://{DomainName}/apidocs/rias){: new_window} to help you format the request.
+
+If you are following the specification but still get the error, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## classic_access_vpc_conflict_duplicate_res
 **Message**: Only one Classic Access VPC can be created.
 
-Cannot create more than one Classic Access VPC for an account
+Only one VPC with Classic Access can be created per region. To list the VPC with Classic Access, run `ibmcloud is vpcs --classic-access`. The existing VPC with Classic Access must be deleted before another one with Classic Access can be created.
 
 ## default_address_prefix_not_found
 **Message**: Default address prefix not found.
@@ -68,7 +79,7 @@ You may see this error message when the default address prefix is not found.
 ## duplicate_error
 **Message**: The input provided already exists.
 
-The resource you've specified already exists. To address this issue, use a different name for the resource you want to create. For example, when creating a new VPC, you can review a list of names for the VPCs already created and choose a name that does not conflict, if you first call `get VPC` using ID, like this:`GET "/v1/vpcs/{id}” -H  "accept: application/json"`. 
+The resource specified already exists. Try using a different name for the resource you want to create. For example, when creating a new VPC, you can list existing VPCs by running `ibmcloud is vpcs`.  Choose a name that does not conflict.
 
 ## floating_ip_in_use
 **Message**: The floating IP is in use.
@@ -78,7 +89,7 @@ This floating IP is already associated with a network interface or public gatewa
 ## floating_ip_not_empty
 **Message**: Cannot delete a server with a floating IP associated.
 
-Be sure to disassociate the floating IP before you delete the server. 
+Be sure to disassociate the floating IP before you delete the server.
 
 For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
@@ -89,35 +100,38 @@ Only one public gateway per zone is allowed in a VPC but the one public gateway 
 
 Use the public gateway's ID to attach it to a subnet, see an example in our [API examples](/docs/infrastructure/vpc?topic=vpc-creating-a-vpc-using-the-rest-apis#step-13-attach-the-public-gateway-to-the-subnet-). If using the CLI, you can use the subnet update command to attach it to a public gateway, for example, `ibmcloud is subnet-update SUBNET_ID --public-gateway-id PUBLIC_GATEWAY_ID`.
 
-
 ## http_request_size_exceeded                    
 **Message**: The HTTP request is too large.
 
-This problem occurs when the payload you have sent in your request has too many characters. Please try again with a smaller payload. For example, instead of trying to do everything in a single request, try creating a minimal resource in one request, and then appending state to it incrementally in several subsequent requests. 
+This problem occurs when the payload you have sent in your request has too many characters. Please try again with a smaller payload. For example, instead of trying to do everything in a single request, try creating a minimal resource in one request, and then appending state to it incrementally in several subsequent requests.
 
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+Refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window} for additional help. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## iam_failure
 **Message**: None
 
-This message can be displayed when a failure has occurred in the IAM service, verifying authentication or authorization. This outage of the IAM service may be temporary. Retry the request after few minutes. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+A failure has occurred in the IAM service, verifying authentication or authorization. The outage of the IAM service may be temporary. Retry the request after few minutes. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## ike_policies_quota_exceeded
 **Message**: The quota for IKE policies is exceeded for the account.
 
-The quotas per resource are given on the [Quotas](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-quotas#vpn-quotas){: new_window} page.
+The quotas per resource are specified on the [Quotas](/docs/infrastructure/vpc?topic=vpc-quotas#vpn-quotas){: new_window} page.
 
 To view current IKE policies, use the `GET /ike_policies` API.
+Equivalent CLI command: `ibmcloud is ike-policies`
 
 ## ike_policy_duplicate_name
 **Message**: The name `<ike_policy_name>` is in use already by IKE policy `<ike_policy_id>`.
 
-Supply a different IKE policy name. Try again in a few minutes. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+Provide a different IKE policy name. Try again in a few minutes. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## ike_policy_in_use
 **Message**: The IKE policy `<ike_policy_id>` is in use by one or more connections.
 
 An IKE policy cannot be deleted if it is in use by one or more connections.
+
+To see which connections are using the IKE policy, use the `GET /ike_policies/<ike_policy_id>/connections` API.
+Equivalent CLI command: `ibmcloud is ike-policy-connections IKE_POLICY_ID`
 
 ## ike_policy_invalid_name
 **Message**: The name `<ike_policy_name>` is not a valid IKE policy name.
@@ -130,75 +144,75 @@ A valid IKE policy name starts with a letter, followed by letters, digits, under
 You referenced an IKE policy that does not exist. Please review your request to ensure that you specified the proper IKE policy ID. Try again in a few minutes. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## insufficient_space_for_subnet
-**Message**: Insufficient space for subnet in address prefix
+**Message**: Insufficient space for subnet in address prefix.
 
-You might get this error if you attempt to create a subnet and the subnet cannot be created because the number of addresses requested cannot be allocated.
+The subnet cannot be created because the number of addresses requested cannot be allocated.
 
 ## internal_error
 **Message**: An internal error occurred.
 
-Please try again. If this error persists, contact support.
+An unexpected error occurred. This problem may be temporary. Try the request again in a few minutes. If this error persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## internal_server_error
 **Message**: None
 
-This error occurs when the service encounters an unexpected error. This problem may be temporary. Try the request again in a few minutes.
-
-If the problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+An unexpected error occurred. This problem may be temporary. Try the request again in a few minutes. If this error persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## internal_solution
 **Message**: Please contact your administrator.
 
-If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+An unexpected error occurred. This problem may be temporary. Try the request again in a few minutes. If this error persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## invalid_id_format
 **Message**: Bad ID format. Ensure format is correct.
 
 Make sure that the ID you provided does not contain any malformed data.
 
-You may get this error message if a malformed start query is used when making a pagination request. For example, 
+You may get this error message if a malformed start query is used when making a pagination request. For example,
 `GET /v1/network_acls?start=23fbba08-ceb3-4cbe-a951-84ff20a06069?version=2019-01-01` contains two `?`s. Fix the query and try again.
 
 ## invalid_state
 **Message**: None
 
-RIAS command `ibmcloud is in-reboot Instance_uuid` can return the message code "invalid_state"
+An action was requested on a resource which is not supported at the current state of the resource. For example, a reboot operation may already be in progress for an instance. Refer to [actions allowed](/docs/infrastructure/vpc?topic=vpc-troubleshooting-your-ibm-cloud-vpc#error-409-conflict-when-invoking-an-action-on-an-instance) depending on the state of the instance.
 
-In one situation, the message is thrown when a reboot operation is attempted while the VSI is already being rebooted. This message also can be received in a situation where multiple reboots are not happening at the same time.
-
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+If the state of the resource does not change in a timely manner, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## invalid_version
 **Message**: The `version` parameter is invalid, it must be of the form `YYYY-MM-DD`.
 
-The version must comply with the format _YYYY-MM-DD_. For single-digit months or dates, such as January 1st, the version should look like `2019-01-01`. The version parameter must be present in the URL. The date given in the version paameter must be after 2019-01-01 and before the current date. For example, to get a list of VPCs, append the version at the end of the request `GET "/v1/vpcs?version=2019-01-01”`.
+The version must comply with the format _YYYY-MM-DD_. For single-digit months or dates, such as January 1st, the version should look like `2019-01-01`. The version parameter must be present in the URL. The date given in the version parameter must be later than 2019-01-01 but before the current date.
 
 ## invalid_version_range
 **Message**: The `version` value cannot be set at a future date nor before `2019-01-01`.
 
-The version must comply with the format _YYYY-MM-DD_. For single-digit months or dates, such as January 1st, the version should look like `2019-01-01`.The version parameter must be present in the URL. The date given in the version parameter must be after 2019-01-01 and before the current date. For example, to get a list of VPCs, append the version at the end of the request `GET "/v1/vpcs?version=2019-01-01”`.
+The date given in the version parameter must be later than 2019-01-01 but before the current date.
 
 ## invalid_zone
 **Message**: Please check whether the resources you are requesting are in the same zone.
 
-You may see this message if the resource you're requested is not in a valid zone.
+You may see this message if the resource you requested is not in a valid zone.
 
 ## ipsec_policies_quota_exceeded
 **Message**: The quota for IPsec policies is exceeded for the account.
 
-The quotas per resource are given on the [Quotas](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-quotas#vpn-quotas){: new_window} page.
+The quotas per resource are specified on the [Quotas](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-quotas#vpn-quotas){: new_window} page.
 
 To view current IPsec policies, use the `GET /ipsec_policies` API.
+Equivalent CLI command: `ibmcloud is ipsec-policies`
 
 ## ipsec_policy_duplicate_name
 **Message**: The name `<ipsec_policy_name>` is in use already by IPsec policy `<ipsec_policy_id>`.
 
-Supply a different IPsec policy name. Try again in a few minutes. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+Provide a different IPsec policy name. Try again in a few minutes. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## ipsec_policy_in_use
 **Message**: The IPsec policy `<ipsec_policy_id>` is in use by one or more connections.
 
 An IPsec policy cannot be deleted if it is in use by one or more connections.
+
+To see which connections are using the IPsec policy, use the `GET /ipsec_policies/<ipsec_policy_id>/connections` API.
+Equivalent CLI command: `ibmcloud is ipsec-policy-connections IPSEC_POLICY_ID`
 
 ## ipsec_policy_invalid_name
 **Message**: The name `<ipsec_policy_name>` is not a valid IPsec policy name.
@@ -208,12 +222,12 @@ A valid IPsec policy name starts with a letter, followed by letters, digits, und
 ## ipsec_policy_not_found
 **Message**: The IPsec policy `<ipsec_policy_id>` could not be found.
 
-You referenced an IPsec policy that does not exist. Please review your request and be sure that you've specified the proper IPsec policy ID. Try again in a few minutes. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+You referenced an IPsec policy that does not exist. Please review your request and specify a valid IPsec policy ID. If you are sure the policy exists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## key_exists
 **Message**: The same key content already exists.
 
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## listener_certificate_not_found
 **Message**: Certificate instance with CRN `<listener_certificate_crn>` cannot be found or no permission to access the certificate instance.
@@ -268,7 +282,7 @@ Please provide an existing listener ID.
 ## listener_over_quota
 **Message**: Listener cannot be created. Quota of listeners for the load balancer resource has reached the maximum limit.
 
-The quotas per resource are given in [Quotas and limits for VPC](https://{DomainName}/docs/infrastructure/vpc/?topic=vpc-quotas){: new_window}.
+The quotas per resource are specified in [Quotas and limits for VPC](https://{DomainName}/docs/infrastructure/vpc/?topic=vpc-quotas){: new_window}.
 
 ## listener_pool_protocols_conflict
 **Message**: Listener protocol(`<listener_protocol>`) and pool protocol(`<pool_protocol>`) are in conflict.
@@ -330,7 +344,7 @@ Please provide an existing load balancer ID.
 
 Either delete an existing load balancer or contact support to increase loadbalancer quota on your account.
 
-The quotas per resource are given in [Quotas and limits for VPC](https://{DomainName}/docs/infrastructure/vpc/?topic=vpc-quotas){: new_window}.
+The quotas per resource are specified in [Quotas and limits for VPC](https://{DomainName}/docs/infrastructure/vpc/?topic=vpc-quotas){: new_window}.
 
 ## load_balancer_unchanged_update
 **Message**: There is nothing to update the load balancer with ID `<load_balancer_id>`.
@@ -360,7 +374,7 @@ Member port is a required field. Please provide member port in your request.
 ## member_over_quota
 **Message**: Member cannot be created. Quota of member instances under the pool has reached maximum limit.
 
-The quotas per resource are given in [Quotas and limits for VPC](https://{DomainName}/docs/infrastructure/vpc/?topic=vpc-quotas){: new_window}.
+The quotas per resource are specified in [Quotas and limits for VPC](https://{DomainName}/docs/infrastructure/vpc/?topic=vpc-quotas){: new_window}.
 
 ## missing_ims_account_id
 **Message**: None
@@ -370,48 +384,48 @@ For further instructions to fix this problem, refer to the [API documentation](h
 ## missing_version
 **Message**: The `version` parameter is required, and it must be of the form `YYYY-MM-DD`.
 
-The version must comply with the format _YYYY-MM-DD_. For single-digit months or dates, such as January 1st, the version should look like `2019-01-01`.The version parameter must be present in the URL. The date given in the version parameter must be after 2019-01-01 and before the current date. For example, to get a list of VPCs, append the version at the end of the request `GET "/v1/vpcs?version=2019-01-01”`.cs?version=2019-01-01”`
+A version parameter is required for all API requests. The version must comply with the format _YYYY-MM-DD_. For single-digit months or dates, such as January 1st, the version should look like `2019-01-01`. The date given in the version parameter must be later than 2019-01-01 but before the current date. Check out these [API examples](/docs/infrastructure/vpc?topic=vpc-creating-a-vpc-using-the-rest-apis) for how to provide the version parameter.
 
 ## network_conflict
-**Message**: CIDR conflicts with existing Address Prefix in VPC
+**Message**: CIDR conflicts with existing Address Prefix in VPC.
 
-You might see this message if you supply a network CIDR that conflicts with an existing network CIDR in the same IP space.
+You might see this message if you provided a network CIDR that conflicts with an existing network CIDR in the same IP space.
 
 ## not_authorized                               
 **Message**: The request is not authorized.
 
-A common reason you may see this error is if your IAM token is missing or expired. For instructions on how to generate a token, refer to [Creating a VPC using the REST APIs](/docs/infrastructure/vpc/example-code.html#creating-a-vpc-using-the-rest-apis). If the token is not expired, you may need to check your permissions and contact your administrator. 
+A common reason you may see this error is if your IAM token is missing or expired. For instructions on how to generate a token, refer to [Creating a VPC using the REST APIs](/docs/infrastructure/vpc/example-code.html#creating-a-vpc-using-the-rest-apis). If the token is not expired, make sure the account you are using is authorized to use this function and you have the [correct permissions](/docs/infrastructure/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
 
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+If you are supposed to be authorized but you are still getting this error, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## not_found
 **Message**: Please check whether the resource you are requesting exists.
 
 You referenced a resource that does not exist or one to which you do not have access. Please review your request to ensure that you specified the proper IDs and references.
 
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+Refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window} for additional help. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## not_implemented
 **Message**: None
 
-The method is not implemented.
+The method is not implemented. Check your request to make sure you are calling a [valid API](https://{DomainName}/apidocs/rias){: new_window}. [Contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support) if you expect this API to be implemented.
 
 ## not_in_address_prefix
 **Message**: The provided CIDR does not fit in any of the address prefixes in the provided zone.
 
 This error occurs if a user is trying to create a subnet with a CIDR that does not fall into any address prefixes for the given zone.
 
-Run GET /vpcs/{vpc_id}/address_prefixes to get the list of address prefixes for the VPC. Look at `cidr` and `zone` values of the response and make sure that the subnet's `cidr` is a subset of the  `cidr` of the address prefix for the zone you are trying to create it.
+Run `GET /vpcs/{vpc_id}/address_prefixes` to get the list of address prefixes for the VPC. Look at the `cidr` and `zone` values of the response and make sure the subnet's `cidr` is a subset of the  `cidr` of the address prefix for the zone you are trying to create it.
 
 ## over_quota                                    
 **Message**: The request would exceed the quota for a resource type.
 
-The quotas per resource are given in [Quotas and limits for VPC](https://{DomainName}/docs/infrastructure/vpc/?topic=vpc-quotas){: new_window}.
+The quotas per resource are specified in [Quotas and limits for VPC](https://{DomainName}/docs/infrastructure/vpc/?topic=vpc-quotas){: new_window}.
 
 ## password_not_ready
 **Message**: None
 
-Your instance must be running before you can retrieve the password. Try again in a few minutes. If this problem persists, contact support.
+Your instance must be running before you can retrieve the password. Try again in a few minutes. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## pool_delete_conflict
 **Message**: Pool cannot be deleted because it is still associated with one or more listeners.
@@ -451,7 +465,7 @@ Please provide an existing pool ID.
 ## pool_over_quota
 **Message**: Pool cannot be created. Quota of pools for the load balancer resource has reached maximum limit.
 
-The quotas per resource are given in [Quotas and limits for VPC](https://{DomainName}/docs/infrastructure/vpc/?topic=vpc-quotas){: new_window}.
+The quotas per resource are specified in [Quotas and limits for VPC](https://{DomainName}/docs/infrastructure/vpc/?topic=vpc-quotas){: new_window}.
 
 ## public_gateway_in_use
 **Message**: Cannot delete a public gateway when it is in use.
@@ -461,7 +475,7 @@ The public gateway currently is attached to one or more subnets. You must detach
 ## rate_limit_exceeded
 **Message**: Too many requests within a short time.
 
-This error message is returned if too many requests are received within a specified time interval. Wait a while and try again. 
+This error message is returned if too many requests are received within a specified time interval. Wait a while and try again.
 
 ## security_group_active_transactions
 **Message**: The interface cannot be attached or detached until the instance appears in Active state.
@@ -494,7 +508,7 @@ If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-g
 
 Detach all interfaces before deleting the security group. Use `DELETE /v1/security_groups/{id}/network_interfaces/{id}?version=2019-01-01` or `ibmcloud is security-group-network-interface-remove` to detach an interface.
 
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias) or the 
+For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias) or the
 [Using Security Groups document](https://{DomainName}/docs/infrastructure/vpc-network?topic=vpc-network-using-security-groups){: new_window}.
 
 If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
@@ -503,9 +517,9 @@ If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-g
 ## security_group_interfaces_per_sg_exceeded
 **Message**: Exceeded limit of interfaces per security group.
 
-Attaching another interface to the security group would exceed the limit of interfaces per security group. The quotas per resource are given in [Quotas and limits for VPC](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-quotas#security-groups-quotas)){: new_window}. Evaluate your strategy and consider creating another security group with similar rules.
+Attaching another interface to the security group would exceed the limit of interfaces per security group. The quotas per resource are specified in [Quotas and limits for VPC](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-quotas#security-groups-quotas){: new_window}. Evaluate your strategy and consider creating another security group with similar rules.
 
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias) 
+For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias)
 or the [Using Security Groups document](https://{DomainName}/docs/infrastructure/vpc-network?topic=vpc-network-using-security-groups){: new_window}.
 
 If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
@@ -514,9 +528,9 @@ If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-g
 ## security_group_last_security_group_is_default
 **Message**: The default security group cannot be removed when it is the only security group attached.
 
-A network interface must be attached to at least one security group. 
-It will be attached to the VPC's default security group if one is not specified. 
-Attach the interface to a different security group, then try again to detach it from the default security group. 
+A network interface must be attached to at least one security group.
+It will be attached to the VPC's default security group if one is not specified.
+Attach the interface to a different security group, then try again to detach it from the default security group.
 For information on the default security group, refer to the [Using Security Groups document](https://{DomainName}/docs/infrastructure/vpc-network?topic=vpc-network-using-security-groups){: new_window}.
 
 If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
@@ -524,7 +538,7 @@ If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-g
 ## security_group_limit_exceeded
 **Message**: Exceeded security group limit.
 
-You have attempted to create a new security group, but you are currently at your account quota. The quotas per resource are given in [Quotas and limits for VPC](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-quotas#security-groups-quotas){: new_window}. Evaluate your strategy for assigning instances to security groups. It is often possible to reduce the overall number of security groups by assigning multiple instances to the same security group. This strategy will reduce the number of security groups, and drop you below your account quota. In rare cases, generally for large organizations, there is a need for expanding the quota. In this case, please [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support) to inquire if this is possible.
+You have attempted to create a new security group, but you are currently at your account quota. The quotas per resource are specified in [Quotas and limits for VPC](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-quotas#security-groups-quotas){: new_window}. Evaluate your strategy for assigning instances to security groups. It is often possible to reduce the overall number of security groups by assigning multiple instances to the same security group. This strategy will reduce the number of security groups, and drop you below your account quota. In rare cases, generally for large organizations, there is a need for expanding the quota. In this case, please [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support) to inquire if this is possible.
 
 ## security_group_network_interface_not_active
 **Message**: The interface cannot be attached because it is not active.
@@ -589,19 +603,19 @@ For further instructions to fix this problem, refer to the [API documentation](h
 **Message**: Exceeded limit of remoting rules per security group.
 
 
-Adding another rule refering to a remote security group would exceed the limit of remoting rules per security group. The quotas per resource are given in [Quotas and limits for VPC](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-quotas#security-groups-quotas){: new_window}.
+Adding another rule refering to a remote security group would exceed the limit of remoting rules per security group. The quotas per resource are specified in [Quotas and limits for VPC](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-quotas#security-groups-quotas){: new_window}.
 
 
 ## security_group_rules_per_sg_exceeded
 **Message**: Exceeded limit of rules per security group.
 
-Adding a rule would exceed the limit of rules per security group. The quotas per resource are given in [Quotas and limits for VPC](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-quotas#security-groups-quotas){: new_window}. Evaulate your strategy and consider creating another security group.
+Adding a rule would exceed the limit of rules per security group. The quotas per resource are specified in [Quotas and limits for VPC](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-quotas#security-groups-quotas){: new_window}. Evaulate your strategy and consider creating another security group.
 
 
 ## security_group_sgs_per_interface_exceeded
 **Message**: Exceeded limit of security groups per interface.
 
-Attaching this interface to another security group would exceed the limit of security groups per interface. The quotas per resource are given in [Quotas and limits for VPC](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-quotas#security-groups-quotas){: new_window}. Evaulate your strategy and consider adding rules to an existing security group.
+Attaching this interface to another security group would exceed the limit of security groups per interface. The quotas per resource are specified in [Quotas and limits for VPC](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-quotas#security-groups-quotas){: new_window}. Evaulate your strategy and consider adding rules to an existing security group.
 
 
 ## security_group_type_code_invalid_protocol
@@ -622,77 +636,79 @@ For further instructions to fix this problem, refer to the [API documentation](h
 ## subnet_acl_conflict
 **Message**: Cannot delete the network ACL, it is attached to a subnet.
 
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+Detach the network ACL from all subnets before attempting to delete it. If the problem persists even after detaching the network ACL, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## subnet_conflict
 **Message**: CIDR conflicts with existing Subnet in VPC.
 
-Run the GET /subnets API to retrieve all subnets in VPC. Make sure that the CIDR that you have provided is not being used by other subnets by checking the value of `ipv4_cidr_block`.
+Run the `GET /subnets` API to retrieve all subnets in VPC. Make sure that the CIDR that you have provided is not being used by other subnets by checking the value of `ipv4_cidr_block`.
 
 If using the CLI, you can run `ibmcloud is subnets` and look at "Subnet CIDR" value for conflicts.
 
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+Refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window} for additional help. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## subnet_not_empty
 **Message**: The subnet is not empty, please contact your administrator.
 
-There was a request to delete a subnet, but the subnet still has resources in it. Subnets may have instances, VPNs, load balancers, or public gateways in them. You must delete your resources in the subnet before you may delete the subnet. 
+There was a request to delete a subnet, but the subnet still has resources in it. Subnets may have instances, VPNs, load balancers, or public gateways in them. You must delete your resources in the subnet before you may delete the subnet.
 
 In some situations, this error can occur even when the console shows 0 VSIs and 0 load balancers, because deletion is asynchronous and it may take a few minutes for the internal status to change. Try your subnet deletion again in a few minutes.
 
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## subnet_not_empty_pgway_exists
 **Message**: Cannot delete the subnet while it is attached to a public gateway. Please detach the public gateway and retry.
 
-There was a request to delete a subnet, but the subnet still has a public gateway attached to it. You must delete or detach the public gateway before you may delete the subnet. 
+There was a request to delete a subnet, but the subnet still has a public gateway attached to it. You must delete or detach the public gateway before you may delete the subnet.
 
-If using the CLI, you can run `ibmcloud is public-gateways` to list the public gateways and `ibmcloud is subnet-public-gateway-detach` to detach a public gateway from a subnet. 
+If using the CLI, you can run `ibmcloud is public-gateways` to list the public gateways and `ibmcloud is subnet-public-gateway-detach` to detach a public gateway from a subnet.
 
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## subnet_not_empty_ipaddr_exists
 **Message**: Cannot delete the subnet while it contains IP addresses. Please delete any server instance associated with the IP address and retry.
 
 There was a request to delete a subnet, but the subnet still contains IP addresses. You must delete the server instance associated with the IP address before you may delete the subnet.
 
-If using the CLI, you can run `ibmcloud is instances` to list the server instances and look at the "Address" value to determine its IP Address and "Status" to determine its status. Run `ibmcloud is instance-delete` to delete a server instance that doesn't already have a Status of "deleting". 
+If using the CLI, you can run `ibmcloud is instances` to list the server instances and look at the "Address" value to determine its IP Address and "Status" to determine its status. Run `ibmcloud is instance-delete` to delete a server instance that doesn't already have a Status of "deleting".
 
 In some situations, this error can occur even when the console shows 0 VSIs, because deletion is asynchronous and it may take a few minutes for the internal status to change. Try your subnet deletion again in a few minutes.
 
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## subnet_not_empty_loadbalancer_exists
 **Message**: Cannot delete the subnet while it contains a load balancer. Please delete the load balancer and retry.
 
 There was a request to delete a subnet, but the subnet still contains a load balancer. You must delete the load balancer before you may delete the subnet.
 
-If using the CLI, you can run `ibmcloud is load-balancers` to list the load balancers and look at the "Subnets" value to determine its Subnet and "Status" to determine its status. Run `ibmcloud is load-balancer-delete` to delete a load balancer that doesn't already have a Status of "deleting". 
+If using the CLI, you can run `ibmcloud is load-balancers` to list the load balancers and look at the "Subnets" value to determine its Subnet and "Status" to determine its status. Run `ibmcloud is load-balancer-delete` to delete a load balancer that doesn't already have a Status of "deleting".
 
 In some situations, this error can occur even when the console shows 0 load balancers, because deletion is asynchronous and it may take a few minutes for the internal status to change. Try your subnet deletion again in a few minutes.
 
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## subnet_not_empty_vpn_gway_exists
 **Message**: Cannot delete the subnet while it contains a VPN gateway. Please delete the VPN gateway and retry.
 
-There was a request to delete a subnet, but the subnet still has a VPN gateway attached to it. You must delete the VPN gateway before you may delete the subnet. 
+There was a request to delete a subnet, but the subnet still has a VPN gateway attached to it. You must delete the VPN gateway before you may delete the subnet.
 
-If using the CLI, you can run `ibmcloud is vpn-gateways` to list the load balancers and look at the "Subnets" value to determine its Subnet and "Status" to determine its status. Run `ibmcloud is vpn-gateway-delete` to delete a VPN gateway that doesn't already have a Status of "deleting". 
+If using the CLI, you can run `ibmcloud is vpn-gateways` to list the load balancers and look at the "Subnets" value to determine its Subnet and "Status" to determine its status. Run `ibmcloud is vpn-gateway-delete` to delete a VPN gateway that doesn't already have a Status of "deleting".
 
 In some situations, this error can occur even when the console shows 0 VPN gateways, because deletion is asynchronous and it may take a few minutes for the internal status to change. Try your subnet deletion again in a few minutes.
 
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## subnet_unknown_state
 **Message**: None
 
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## system_limit_exceeded
-**Message**: This operation would exceed a system limit
+**Message**: This operation would exceed a system limit.
 
 One possible scenario for receiving this error message is if you try to create an address prefix, but the maximum number of address prefixes already exist.
+
+If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## target_in_use
 **Message**: The target already has floating IP attached.
@@ -730,6 +746,8 @@ For example, the following value would be invalid because `northbound` is not a 
 }
 ```
 
+Refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window} or the [CLI reference](/docs/infrastructure-service-cli-plugin?topic=infrastructure-service-cli-vpc-reference){: new_window} for acceptable values.
+
 ## validation_failure                            
 **Message**: The JSON provided did not match the expected structure.
 
@@ -757,14 +775,14 @@ Currently, IPv6 is not supported. Please use an IPv4 address.
 ## validation_invalid_address
 **Message**: The value is not a valid address.
 
-Must be a valid IP address
+Must be a valid IP address.
 
 A list of individually reserved IP addresses is given in the [Regions and Subnets](/docs/infrastructure/vpc-network?topic=vpc-network-working-with-ip-address-ranges-address-prefixes-regions-and-subnets) document.
 
 ## validation_invalid_ipv4_address
 **Message**: The value is not a valid IPv4 address.
 
-Give a valid IPv4 address.
+Provide a valid IPv4 address.
 
 ## validation_invalid_ipv6_address
 **Message**: The value is not a valid IPv6 address.
@@ -777,19 +795,24 @@ Give a valid IPv6 address. Currently, IPv6 is not supported; use an IPv4 address
 To fix this problem, be sure the content of your request conforms to the [API documentation](https://{DomainName}/apidocs/rias){: new_window} for the endpoint you are calling.
 
 ## validation_max_value
-**Message**: The value supplied was too large.
+**Message**: A value provided for a parameter is larger than allowed.
 
-Supply a smaller value that meets the maximum as given by the specification. For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}.
+
+Provide a smaller value that meets the maximum as given by the [specification](https://{DomainName}/apidocs/rias){: new_window}.
+
 
 ## validation_min_value
-**Message**: The value supplied was too small.
+**Message**: A value provided for a parameter is smaller than allowed.
 
-Supply a larger value that meets the minimum as given by the specification. For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}.
+You may get this error if you try to create a subnet with `total_ipv4_address_count` less than 8.
+
+Provide a larger value that meets the minimum as given by the [specification](https://{DomainName}/apidocs/rias){: new_window}.
+
 
 ## validation_not_null
 **Message**: The field supplied must be null.
 
-Be sure the value is null. For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}.
+Be sure the value is null. Refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}.
 
 Here is an invalid example:
 
@@ -802,7 +825,7 @@ Here is an invalid example:
 ## validation_only_one
 **Message**: The value must match one of the subschemas.
 
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}.
+Make sure your request conforms to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}.
 
 ## validation_discriminator_forbidden
 **Message**: The discriminator field forbids this substructure.
@@ -820,42 +843,42 @@ The protocol is `icmp`, and _port_min_ is a `tcp` field, so you'll get an error.
 1. validation_discriminator_required for missing `icmp` rules
 2. validation_discriminator_forbidden for `tcp` fields with `icmp` specified
 
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+Make sure your request conforms to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## validation_internal_error
 **Message**: None
 
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+Make sure your request conforms to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## validation_invalid_name
 **Message**: The value is not a valid name.
 
+Make sure your request conforms to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## validation_invalid_ref
 **Message**: The value is not a valid HREF.
 
+Make sure your request conforms to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## validation_non_empty_uuid
 **Message**: None
 
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+Make sure your request conforms to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## validation_required_field
 **Message**: Missing a required field.
 
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+Make sure your request conforms to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## validation_unique_failed
 **Message**: The field supplied must be unique.
 
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
-
 You might have specified a name that is already in use. Please try a different value.
+
+Make sure your request conforms to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## vpc_acl_conflict                           
 **Message**: Cannot delete the default network ACL, it is attached to a VPC.
-
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias) or the [Using Network ACLs document](/docs/infrastructure/vpc-network?topic=vpc-network-setting-up-network-acls-using-the-cli){: new_window}.
 
 If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
@@ -866,31 +889,33 @@ All resources must be removed from a VPC before it can be deleted.
 
 You could receive this error if you still have a gateway in your VPC, even when all subnets are deleted, because the gateway can exist in the VPC without a subnet. It may be necessary to use the CLI to check for orphaned resources.
 
-For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## vpc_resource_separation
-**Message**: The resources are in different VPCs
+**Message**: The resources are in different VPCs.
 
 ## vpn_connection_cidr_not_created
 **Message**: A CIDR block could not be added to the VPN connection `<vpn_connection_id>`.
 
-Supply a valid CIDR that meets the requirements given by the specification. 
+Provide a valid CIDR that meets the requirements given by the specification.
 
 For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## vpn_connection_cidr_not_deleted
 **Message**: A CIDR block could not be deleted from the VPN connection `<vpn_connection_id>`.
 
-Supply a valid CIDR that exists on the connection. A connection must have at least one local and peer CIDR.
+Provide a valid CIDR that exists on the connection. A connection must have at least one local and peer CIDR.
 
 To view the connection's CIDR blocks, use the `GET /vpn_gateways/<vpn_gateway_id>/connections/<vpn_connection_id>` API and check the `local_cidrs` and `peer_cidrs` fields.
+Equivalent CLI command: `ibmcloud is vpn-gateway-connection VPN_GATEWAY_ID CONNECTION_ID`
 
 ## vpn_connection_cidr_not_found
 **Message**: The CIDR block was not found in the VPN connection `<vpn_connection_id>`.
 
-Supply a valid CIDR that is in the connection.
+Provide a valid CIDR that is in the connection.
 
 To view the connection's CIDR blocks, use the `GET /vpn_gateways/<vpn_gateway_id>/connections/<vpn_connection_id>` API and check the `local_cidrs` and `peer_cidrs` fields.
+Equivalent CLI command: `ibmcloud is vpn-gateway-connection VPN_GATEWAY_ID CONNECTION_ID`
 
 ## vpn_connection_cidr_not_valid
 **Message**: The CIDR block `<cidr_block>` does not represent a valid address.
@@ -898,18 +923,20 @@ To view the connection's CIDR blocks, use the `GET /vpn_gateways/<vpn_gateway_id
 The value must be a valid internal CIDR block with no host bits set.
 
 To view the connection's CIDR blocks, use the `GET /vpn_gateways/<vpn_gateway_id>/connections/<vpn_connection_id>` API and check the `local_cidrs` and `peer_cidrs` fields.
+Equivalent CLI command: `ibmcloud is vpn-gateway-connection VPN_GATEWAY_ID CONNECTION_ID`
 
 ## vpn_connection_cidr_overlap
 **Message**: The CIDR block `<cidr_block_1>` overlaps with `<cidr_block_2>`. Two peer CIDR blocks cannot overlap on the same VPC and two local CIDR blocks cannot overlap on the same connection.
 
-Supply a valid CIDR value that meets the requirements given by the specification.
+Provide a valid CIDR value that meets the requirements given by the specification.
 
 To view the connection's CIDR blocks, use the `GET /vpn_gateways/<vpn_gateway_id>/connections/<vpn_connection_id>` API and check the `local_cidrs` and `peer_cidrs` fields.
+Equivalent CLI command: `ibmcloud is vpn-gateway-connection VPN_GATEWAY_ID CONNECTION_ID`
 
 ## vpn_connection_duplicate_name
 **Message**: The name `<vpn_connection_name>` is already in use by VPN connection `<vpn_connection_id>`.
 
-Supply a different connection name. Try again in a few minutes. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+Provide a different connection name. Try again in a few minutes. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## vpn_connection_invalid_name
 **Message**: The name `<vpn_connection_name>` is not a valid VPN connection name.
@@ -924,23 +951,25 @@ A valid PSK should only contain 6 to 128 characters which are letters, digits, `
 ## vpn_connection_local_cidrs_required
 **Message**: At least one local CIDR block is required when creating a VPN connection.
 
-Supply a valid local CIDR value that meets the requirements given by the specification.
+Provide a valid local CIDR value that meets the requirements given by the specification.
 
 For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}.
 
 ## vpn_connection_local_subnets_quota_exceeded
 **Message**: The quota for local subnets across VPN connections exceeded for VPN gateway `<vpn_gateway_id>`.
 
-The quotas per resource are given on the [Quotas](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-quotas#vpn-quotas){: new_window} page.
+The quotas per resource are specified on the [Quotas](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-quotas#vpn-quotas){: new_window} page.
 
 To view the current local subnets across VPN connections, use the `GET /vpn_gateways/<vpn_gateway_id>/connections` API and check the `local_cidrs` field for each connection.
+Equivalent CLI command: `ibmcloud is vpn-gateway-connections VPN_GATEWAY_ID`
 
 ## vpn_connection_local_subnets_quota_exceeded_for_connection
 **Message**: The quota of '<quota_limit>' local subnets for VPN connection is exceeded.
 
-The quotas per resource are given on the [Quotas](https://{DomainName}/docs/infrastructure/vp?topic=vpc-quotas#vpn-quotas){: new_window} page.
+The quotas per resource are specified on the [Quotas](https://{DomainName}/docs/infrastructure/vp?topic=vpc-quotas#vpn-quotas){: new_window} page.
 
 To view the current local subnets for a VPN connection, use the `GET /vpn_gateways/<vpn_gateway_id>/connections/<vpn_connection_id>` API and check the `local_cidrs` field.
+Equivalent CLI command: `ibmcloud is vpn-gateway-connection VPN_GATEWAY_ID CONNECTION_ID`
 
 ## vpn_connection_not_found
 **Message**: The VPN connection `<vpn_connection_id>` could not be found.
@@ -950,30 +979,33 @@ Check whether the connection ID is correct. Try again in a few minutes. If this 
 ## vpn_connection_peer_cidrs_required
 **Message**: At least one peer CIDR block is required when creating a VPN connection.
 
-Supply a valid peer CIDR value that meets the requirements given by the specification.
+Provide a valid peer CIDR value that meets the requirements given by the specification.
 
 For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}.
 
 ## vpn_connection_peer_subnets_quota_exceeded
 **Message**: The quota for peer subnets across VPN connections is exceeded for the VPN gateway `<vpn_gateway_id>`.
 
-The quotas per resource are given on the [Quotas](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-quotas#vpn-quotas){: new_window} page.
+The quotas per resource are specified on the [Quotas](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-quotas#vpn-quotas){: new_window} page.
 
 To view the current peer subnets across VPN connections, use the `GET /vpn_gateways/<vpn_gateway_id>/connections` API and check the `peer_cidrs` field for each connection.
+Equivalent CLI command: `ibmcloud is vpn-gateway-connections VPN_GATEWAY_ID`
 
 ## vpn_connection_peer_subnets_quota_exceeded_for_connection
 **Message**: The quota of `<quota_limit>` peer subnets for VPN connection is exceeded.
 
-The quotas per resource are given on the [Quotas](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-quotas#vpn-quotas){: new_window} page.
+The quotas per resource are specified on the [Quotas](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-quotas#vpn-quotas){: new_window} page.
 
 To view the current peer subnets for a VPN connection, use the `GET /vpn_gateways/<vpn_gateway_id>/connections/<vpn_connection_id>` API and check the `peer_cidrs` field.
+Equivalent CLI command: `ibmcloud is vpn-gateway-connection VPN_GATEWAY_ID CONNECTION_ID`
 
 ## vpn_connections_quota_exceeded
 **Message**: The quota for VPN connections is exceeded for the VPN gateway `<vpn_gateway_id>`.
 
-The quotas per resource are given on the [Quotas](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-quotas#vpn-quotas){: new_window} page.
+The quotas per resource are specified on the [Quotas](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-quotas#vpn-quotas){: new_window} page.
 
 To view the current VPN connections for a VPN gateway, use the `GET /vpn_gateways/<vpn_gateway_id>/connections` API.
+Equivalent CLI command: `ibmcloud is vpn-gateway-connections VPN_GATEWAY_ID`
 
 ## vpn_connection_static_route_not_created
 **Message**: Failed to add a static route for the CIDR block `<peer_cidr>`.
@@ -988,14 +1020,14 @@ Try again in a few minutes. If this problem persists, [contact support](/docs/in
 ## vpn_connection_update_cidrs_not_permitted
 **Message**: CIDR blocks cannot be changed when updating a connection. Please use the correct API when creating or deleting CIDRs.
 
-Supply a valid request value that meets the requirements given by the specification.
+Provide a valid request value that meets the requirements given by the specification.
 
 For further instructions to fix this problem, refer to the [API documentation](https://{DomainName}/apidocs/rias){: new_window}.
 
 ## vpn_gateway_duplicate_name
 **Message**: The name `<vpn_gateway_name>` is already in use by VPN gateway `<vpn_gateway_id>`.
 
-Supply a different VPN gateway name. Try again in a few minutes. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+Provide a different VPN gateway name. Try again in a few minutes. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## vpn_gateway_initialization_error
 **Message**: The VPN gateway could not be initialized.
@@ -1030,11 +1062,12 @@ You've referenced a subnet that does not exist. Please review your request to en
 ## vpn_gateway_subnet_status_error
 **Message**: The VPN gateway could not be created due to subnet status.
 
-Supply a subnet that is in `available` status. Try again in a few minutes. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
+Provide a subnet that is in `available` status. Try again in a few minutes. If this problem persists, [contact support](/docs/infrastructure/vpc?topic=vpc-getting-help-and-support).
 
 ## vpn_gateways_quota_exceeded
 **Message**: Quota for VPN gateways exceeded for the account and/or the region.
 
-The quotas per resource are given on the [Quotas](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-quotas#vpn-quotas){: new_window} page.
+The quotas per resource are specified on the [Quotas](https://{DomainName}/docs/infrastructure/vpc?topic=vpc-quotas#vpn-quotas){: new_window} page.
 
 To view the current VPN gateways, use the `GET /vpn_gateways` API.
+Equivalent CLI command: `ibmcloud is vpn-gateways`

@@ -2,7 +2,11 @@
 
 copyright:
   years: 2017, 2018, 2019
-lastupdated: "2019-02-20"
+lastupdated: "2019-03-03"
+
+keywords: create, VPC, API, IAM, token, permissions, endpoint, region, zone, profile, status, subnet, gateway, floating IP, delete, resource, provision
+
+subcollection: vpc
 
 ---
 
@@ -235,6 +239,9 @@ curl -X PUT $rias_endpoint/v1/subnets/$subnet/public_gateway?version=2019-01-01 
 ## Step 14: Create an SSH Key
 
 Create a key with your public SSH key. This key is used when creating the virtual server instance, and it is needed to log into the virtual server instance.
+
+Keys only can be added initially as part of creating the VPC in the UI or CLI. No tooling exists to add keys later.
+{:tip}
 
 ```bash
 curl -X POST $rias_endpoint/v1/keys?version=2019-01-01 \

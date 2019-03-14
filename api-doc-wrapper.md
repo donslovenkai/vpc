@@ -4,7 +4,11 @@ copyright:
 
   years: 2019
 
-lastupdated: "2019-02-20"
+lastupdated: "2019-03-03"
+
+keywords: API, reference, VPC
+
+subcollection: vpc
 
 ---
 

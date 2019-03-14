@@ -13,6 +13,7 @@ Virtual Private Cloud (VPC) Infrastructure
     Pricing
         pricing.md
         vpc-vsi-pricing.md
+        block-storage-is-pricing.md
 
     related-links.md
     {: .navgroup-end}
@@ -21,6 +22,7 @@ Virtual Private Cloud (VPC) Infrastructure
     console-tutorial.md
     hello-world-vpc.md
     example-code.md
+    [Creating a VPC with Public and Private subnets](https://cloud.ibm.com/docs/tutorials?topic=solution-tutorials-vpc-public-app-private-backend#vpc-public-app-private-backend)
     classic-access.md
     vpc-regions.md
 

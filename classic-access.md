@@ -1,7 +1,11 @@
 ---
 copyright:
   years: 2018, 2019
-lastupdated: "2019-02-20"
+lastupdated: "2019-03-03"
+
+keywords: classic, access, API, CLI, limitations
+
+subcollection: vpc
 
 ---
 
@@ -20,7 +24,7 @@ lastupdated: "2019-02-20"
 # Setting up access to your Classic Infrastructure from VPC
 {: #setting-up-access-to-your-classic-infrastructure-from-vpc}
 
-You may set up access to your {{site.data.keyword.cloud}} Classic Infrastructure, including Direct Link connectivity, from one VPC in each region, for any account. These special "Classic Access VPCs" use the same implicit router as your {{site.data.keyword.cloud}} classic infrastructure.
+You may set up access to your {{site.data.keyword.cloud}} Classic Infrastructure, including Direct Link connectivity, from one VPC in each region, for any account. These special "Classic Access VPCs" use the same routing capability (implicit router) as your {{site.data.keyword.cloud}} classic infrastructure. Readers are expected to be familiar with Classic Infrastructure networking.
 
 When you've set up a VPC for classic access, every compute host (VSI or Bare Metal) in your classic account can send and receive packets to and from the classic access VPC. However, remember that firewalls, gateways, Network ACLs, or security groups can filter this traffic. As a best practice, we recommend that you allow only the traffic that's required for your applications to function properly.
 

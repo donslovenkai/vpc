@@ -2,8 +2,11 @@
 
 copyright:
   years: 2018, 2019
-lastupdated: "2019-02-22"
+lastupdated: "2019-03-03"
 
+keywords: create, configure, permissions, ACL, virtual, server, instance, subnet, block, storage, volume, security, group, images, Windows, Linux, example, monitoring, VPN, load balancer, IKE, IPsec
+
+subcollection: vpc
 
 ---
 
@@ -26,6 +29,7 @@ To create and configure your virtual private cloud (VPC) and other attached reso
 1. Create a VPC and subnet to define the network.
 1. Configure an access control list (ACL) to limit the subnet's inbound and outbound traffic. By default, all traffic is allowed.
 1. Create a virtual server instance.
+1. Create a block storage volume and attach it to an instance.
 1. Configure a security group to define the inbound and outbound traffic that's allowed for the instance.
 1. Reserve and associate a floating IP address to enable your instance to be reachable from the internet.
 1. Create a load balancer to distribute requests over multiple instances.
@@ -113,11 +117,31 @@ To create a virtual server instance in the newly created subnet:
 1. Select an existing SSH key or add a new SSH key that will be used to access the virtual server instance. To add an SSH key, click **New key** and name the key. After you enter your previously generated public key value, click **Add SSH key**.
 1. _Optional:_ Enter user data to run common configuration tasks when your instance starts. For example, you can specify cloud-init directives or shell scripts for Linux images. For more information, see [User Data](/docs/vsi-is?topic=virtual-servers-is-user-data).
 1. Note the boot volume. In the current release, 100 GB is allotted for the boot volume. *Auto Delete* is enabled for the volume; it will be deleted automatically if the instance is deleted.
+1. In the **Attached block storage volume** area, you can click **New block storage volume** to attach a block storage volume to your instance. In this tutorial, we'll create a block storage volume and attach it to the instance later.
 1. In the **Network interfaces** area, you can edit the network interface and change its name and port speed. If you have more than one subnet in the selected zone and VPC, you can attach a different subnet to the interface. If you want the instance to exist in multiple subnets, you can create more interfaces.
 
    You can also select which security groups to attach to each interface. By default, the VPC's default security group is attached. The default security group allows inbound SSH and ping traffic, all outbound traffic, and all traffic between instances in the group. All other traffic is blocked; you can configure rules to allow more traffic. If you later edit the rules of the default security group, those updated rules will apply to all current and future instances in the group.
 
 1. Click **Create virtual server instance**. The status of the instance starts as *Pending*, changes to *Stopped*, and then *Powered On*. You might need to refresh the page to see the change in status.
+
+## Creating and attaching a block storage volume
+
+You can create a block storage volume and attach it to your virtual server instance.
+
+To create and attach a block storage volume:
+
+1. In the navigation pane, click **Storage > Block storage volumes**.
+1. On the Block storage volumes for VPC page, click **New volume** and specify the following information.
+  * **Name**: Enter a name for the block storage volume, such as `data-volume-1`.  
+  * **Resource group**: Select a resource group for the block storage volume. Resource groups enable you to organize your account resources for access control and billing purposes. For more information, see [Best practices for organizing resources in a resource group](/docs/resources?topic=resources-bp_resourcegroups).
+  * **Tags**: _Optional:_ Enter tags to help you organize and find your resources. You can add more tags later. For more information, see [Working with tags](/docs/resources?topic=resources-tag).
+  * **Location**: Select a location for the block storage volume. The location consists of a region and a zone, for example US South 1.
+  * **Size**: Specify the size of the volume between 10 GBs and 2000 GBs.
+  * **IOPs**: Select one of the IOPs Tiers or click Custom to enter an IOPs value based on volume size.
+  * **Encryption**: Accept the default Provider managed encryption or select Customer managed and use your own encryption key. This step requires provisioning a Key Protect service instance and creating or importing a root key. For more information, see [Creating block storage volumes with customer managed encryption](/docs/infrastructure/block-storage-is?topic=block-storage-is-block-storage-encryption#data-vol-encryption-ui).
+1. Click **Create volume**.
+1. In the list of block storage volumes, find the volume that you created. When the status is Available, click "..." and select **Attach to instance**.
+1. Select the instance to which you want to attach the volume and click **Attach**.
 
 ## Configuring the security group for the instance
 
@@ -287,4 +311,4 @@ To create a VPN:
 
 ## Congratulations!
 
-You've successfully created and configured a VPC and subnet, an ACL, a virtual server instance, security group, floating IP address, load balancer, and VPN. You can continue to develop your VPC by adding more instances, subnets, and other resources.
+You've successfully created and configured a VPC and subnet, an ACL, a virtual server instance, block storage volume, security group, floating IP address, load balancer, and VPN. You can continue to develop your VPC by adding more instances, subnets, and other resources.

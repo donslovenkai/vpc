@@ -3,8 +3,11 @@
 copyright:
   years: 2017, 2018, 2019
 
-lastupdated: "2019-02-20"
+lastupdated: "2019-03-03"
 
+keywords: resource, access, role, role-based, authorization, policy, access group, resource group, permission, assign, administrator, operator, editor, viewer, user, team, scenario, manage, create, IAM
+
+subcollection: vpc
 
 ---
 
@@ -70,7 +73,7 @@ In the steps that follow, you'll create two IAM policies. Both policies are need
 9. Select the **Editor** role.
 10. Click **Assign**.
 
-The user is now authorized to create and use VPC resources in the account's default resource group. The first policy assigned the user the **Editor** role for infrastructure service resources (but access is limited to resources in the account's default resource group). The second policy allows the user to view the account's default resource group.
+The user is now authorized to create and use VPC resources in the account's default resource group. The first policy (steps 1-6) allows the user to view the account's default resource group. The second policy (steps 7-10) assigned the user the **Editor** role for infrastructure service resources, but access is limited to resources in the account's default resource group. 
 
 When you're creating IAM policies, keep in mind that some accounts must be granted access ("whitelisted") before they can use certain infrastructure service resource types, especially resources in Beta or early access.
 {: tip}
@@ -141,7 +144,8 @@ Add the necessary VPC access policies so that the `test_team` access group can m
 9. Select the **Editor** role.
 10. Select **Assign**.
 
-These steps also assign **Viewer** access to the `test_team` resource group. It is required to create, update, and delete resources inside it.
+These steps also assign **Viewer** access to the `test_team` resource group. Viewer access is required to update, create, and delete resources inside the `test_team` resource group.
+
 {: tip}
 
 Repeat the previous steps for the remaining three access groups. You'll accomplish these tasks for matching up access groups with resource groups:

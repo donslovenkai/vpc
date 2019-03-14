@@ -1,7 +1,12 @@
 ---
 copyright:
   years: 2017, 2019
-lastupdated: "2019-02-20"
+lastupdated: "2019-03-03"
+
+keywords: features, benefits, isolation, provisioning, security, cloud-native, workloads, BYOIP
+
+subcollection: vpc
+
 ---
 
 {:shortdesc: .shortdesc}

@@ -2,7 +2,11 @@
 
 copyright:
   years: 2017, 2018, 2019
-lastupdated: "2019-02-20"
+lastupdated: "2019-03-03"
+
+keywords: permissions, infrastructure, VPC, SSH, CLI, API, console
+
+subcollection: vpc
 
 ---
 
@@ -52,8 +56,9 @@ If you're new to IBM Cloud Virtual Private Cloud, choose any of the links below,
 * For more advanced users, you can call the [REST APIs](https://{DomainName}/apidocs/rias) directly. Follow the [example code](/docs/infrastructure/vpc?topic=vpc-creating-a-vpc-using-the-rest-apis) tutorial to get started with the REST APIs.
 
 ## Next steps
-If you're ready to dig in, go directly to the detailed documentation about **VPC Networking** and **VSIs for VPC**:
+If you're ready to dig in, go directly to the detailed documentation about **VPC Networking**,  **VSIs for VPC**, and **Block Storage for VPC**:
 
 * [**IBM Virtual Private Cloud Networking**](/docs/infrastructure/vpc-network?topic=vpc-network-getting-started-with-networking-for-virtual-private-cloud)
 * [**IBM Virtual Servers for Virtual Private Cloud**](/docs/vsi-is?topic=virtual-servers-is-gettingstartedvsigen)
+* [**IBM Block Storage for Virtual Private Cloud**](/docs/infrastructure/block-storage-is?topic=block-storage-is-block-storage-getting-started)
 

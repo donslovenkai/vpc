@@ -2,7 +2,11 @@
 
 copyright:
   years: 2019
-lastupdated: "2019-02-20"
+lastupdated: "2019-03-03"
+
+keywords: region, zone, deploy, datacenter, data, center, federated, CLI, API, account
+
+subcollection: vpc
 
 ---
 

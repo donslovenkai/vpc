@@ -2,7 +2,11 @@
 
 copyright:
   years: 2017, 2018, 2019
-lastupdated: "2019-02-20"
+lastupdated: "2019-03-03"
+
+keywords: resource, VSI, virtual, server, instance, deployment, provisioning, instantiate, managing
+
+subcollection: vpc
 
 ---
 

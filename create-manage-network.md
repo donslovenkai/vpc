@@ -3,7 +3,11 @@
 copyright:
   years: 2017, 2018, 2019
 
-lastupdated: "2019-02-20"
+lastupdated: "2019-03-03"
+
+keywords: resource, network, capabilities, overview, security, load balancer, VPN, security groups, ACL, address, IP, range, prefix, peering, Fortigate, Cisco, Vyatta, VPC, vSRX
+
+subcollection: vpc
 
 
 ---

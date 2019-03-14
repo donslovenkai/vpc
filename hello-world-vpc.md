@@ -2,7 +2,11 @@
 
 copyright:
   years: 2017, 2018, 2019
-lastupdated: "2019-02-20"
+lastupdated: "2019-03-03"
+
+keywords: create, VPC, CLI, resources, plugin, SSH, key, hello, world, provision, instance, subnet
+
+subcollection: vpc
 
 ---
 
@@ -77,7 +81,7 @@ ibmcloud login
 ```
 {: pre}
 
-### Step 2: Create a VPC and save the VPC ID.
+## Step 2: Create a VPC and save the VPC ID.
 
 Use the following command to create a VPC named _helloworld-vpc_.
 
@@ -151,7 +155,35 @@ ibmcloud is subnet $subnet
 ```
 {: pre}
 
-## Step 4: Create an SSH Key in IBM Public Cloud.
+## Step 4: Attach a public gateway
+
+Attach a public gateway to the subnet to allow all attached resources to communicate with the public internet. 
+
+To create a public gateway, run the following command:
+
+```
+ibmcloud is public-gateway-create my-gateway $vpc us-south-2
+```
+{: pre}
+
+Save the ID in a variable so you can use it later, for example:
+
+```
+gateway="f94a91c7-95db-42f2-9949-93a7e8fb63fb"
+```
+{: pre}
+
+To attach the public gateway to your subnet, run the following command:
+```
+ibmcloud is subnet-update $subnet --public-gateway-id $gateway
+```
+{: pre}
+
+
+Only one public gateway per zone is allowed in a VPC, but that public gateway can be attached to multiple subnets in the zone. To find the public gateway for a zone, run the 'ibmcloud is public-gateways` command and look for the particular VPC and Zone values.
+{: tip}
+
+## Step 5: Create an SSH Key in IBM Public Cloud.
 
 You'll use the key to provision a virtual server instance. You can use the same key to provision multiple virtual server instances.
 
@@ -191,7 +223,7 @@ Save the ID in a variable so we can use it later, for example:
 key="859b4e97-7540-4337-9c64-384792b85653"
 ```
 
-## Step 5: Select a profile and image for the virtual server instance.
+## Step 6: Select a profile and image for the virtual server instance.
 
 To list all available instance profiles, run the following command:
 
@@ -214,7 +246,7 @@ image=$(ibmcloud is images | grep "ubuntu-16.04-amd64" | cut -d" " -f1)
 ```
 {: pre}
 
-## Step 6: Provision a Virtual Server Instance.
+## Step 7: Provision a Virtual Server Instance.
 
 ```
 ibmcloud is instance-create helloworld-vsi $vpc us-south-2 b-2x8 $subnet 1000 --image-id $image --key-ids $key
@@ -259,7 +291,7 @@ ibmcloud is instances
 {: pre}
 
 
-## Step 7: Create a Floating IP address.
+## Step 8: Create a Floating IP address.
 
 You need a Floating IP address so you can log in to the virtual server instance (VSI) from the internet.
 
@@ -292,7 +324,7 @@ address=169.61.181.53
 ```
 {: pre}
 
-## Step 8: Add a rule to the default security group for SSH
+## Step 9: Add a rule to the default security group for SSH
 
 Find the security group for the VPC:
 
@@ -349,7 +381,7 @@ Remote      -
 ```
 {:screen}
 
-## Step 9: Log in to your virtual server instance using your private SSH key.
+## Step 10: Log in to your virtual server instance using your private SSH key.
 
 For example, you can use a command of this form:
 
@@ -389,7 +421,7 @@ root@helloworld-vsi:~#
 ```
 {:screen}
 
-## Step 10: Hello, World!
+## Step 11: Hello, World!
 
 Run the following command in the terminal window:
 

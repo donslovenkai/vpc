@@ -3,7 +3,11 @@
 copyright:
   years: 2017, 2018, 2019
 
-lastupdated: "2019-02-20"
+lastupdated: "2019-03-03"
+
+keywords: resource, access, role, role-based, authorization, policy, access group, resource group, permission, assign, administrator, operator, editor, viewer, user, control
+
+subcollection: vpc
 
 ---
 

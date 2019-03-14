@@ -3,7 +3,11 @@
 copyright:
   years: 2017, 2018, 2019
 
-lastupdated: "2019-02-20"
+lastupdated: "2019-03-03"
+
+keywords: pricing, billing, data, instance, VSI, block, storage, paygo, transfer, floating, server, VPC, allowance, gateway, egress, minimal charges, ARP, traffic
+
+subcollection: vpc
 
 
 ---
@@ -24,6 +28,8 @@ lastupdated: "2019-02-20"
 The table summarizes the pricing for internet data transfer with {{site.data.keyword.cloud}} Virtual Private Cloud. Remember that there is no charge for traffic between VPC and Classic IBM Cloud services. Also, for PayGo services, the service tiers are bound to your account, not to any specific VPC instance. Amounts are shown in U.S. dollars.
 
 Separate pricing applies for [virtual server instances](/docs/infrastructure/vpc?topic=vpc-pricing-for-virtual-servers-for-vpc) used within your IBM Cloud VPC.
+
+Pricing for block storage [is available](/docs/infrastructure/vpc?topic=vpc-block-storage-pricing).
 
 ## Free allowances for internet data transfer
 
